@@ -8,7 +8,7 @@ Run with:
 Or import `main.main()` from tests.
 """
 
-from calculator import calc_monthly_time, calc_monthly_and_yearly_time, calc_yearly_time
+from calculator import get_time_breakdown
 
 
 
@@ -39,13 +39,14 @@ if __name__ == "__main__":
         # If hours are entered, convert to minutes.
         hours_user_input = input("Enter hours spent per day: ")
         try:
-            hours_per_day = int(hours_user_input)
-            minutes_per_day = hours_per_day * 60
+            # allow float hours (e.g. 1.5 -> 90 minutes)
+            hours_per_day = float(hours_user_input)
+            minutes_per_day = int(round(hours_per_day * 60))
 
-            calc_monthly_and_yearly_time(minutes_per_day)
+            get_time_breakdown(minutes_per_day)
  
         except ValueError:
-            print("Invalid input: please enter an integer number of hours.")
+            print("Invalid input: please enter a number for hours (e.g. 1.5 for 1 hour 30 minutes).")
             exit(1)
 
 
@@ -55,7 +56,7 @@ if __name__ == "__main__":
         minutes_user_input = input("Enter minutes spent per day: ")
         try:
             minutes_per_day = int(minutes_user_input)
-            calc_monthly_and_yearly_time(minutes_per_day)
+            get_time_breakdown(minutes_per_day)
 
         except ValueError:
             print("Invalid input: please enter an integer number of minutes.")
